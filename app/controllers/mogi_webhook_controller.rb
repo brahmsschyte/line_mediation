@@ -3,7 +3,7 @@ class MogiWebhookController < ApplicationController
 
   def callback
     #GPSLogger Android App
-    code = params[:annotation] || 'Location Update'
+    code = params[:annotation].blank? ? 'Location Update' : params[:annotation]
     MogiTrack.create(android_id: params[:android_id], serial: params[:key], annotation: code, altitude: params[:altitude], speed: params[:speed], accuracy: params[:accuracy], latitude: params[:latitude], longitude: params[:longitude], time_id: DateTime.parse(params[:time_id]), retrieved: false)
 
     head :ok
