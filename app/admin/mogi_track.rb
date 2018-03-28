@@ -7,8 +7,6 @@ ActiveAdmin.register MogiTrack do
     column :android_id
     column :serial
     column :annotation
-    column :latitude
-    column :longitude
     column :time_id
     column :retrieved
     actions

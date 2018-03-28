@@ -10,9 +10,6 @@ class LineWebhookController < ApplicationController
     LineEvent.create(event: params["events"][0], retrieved: false, line_bot_id: @line_bot.id)
 
     head :ok
-    respond_to do |format|
-      format.json
-    end
   end
 
   private
