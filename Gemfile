@@ -60,3 +60,4 @@ gem 'activeadmin'
 gem 'devise'
 gem 'pundit'
 gem 'unirest'
+gem 'whenever', require: false
