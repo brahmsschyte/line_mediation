@@ -1,0 +1,2 @@
+class MogiTrack < ApplicationRecord
+end
