@@ -1,4 +1,5 @@
 class SmsWebhookController < ApplicationController
+  protect_from_forgery with: :null_session, only: [:callback, :delivery_report]
   after_action :set_retrieved_flag, only: [:index]
 
   def callback # from/to cyclops
