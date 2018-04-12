@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     scope '/v1' do
       resources :line_events, only: [:index]
       resources :mogi_tracks, only: [:index]
-      get 'sms_delivery_reports', to: 'sms_webhook#index'
+      resources :sms_delivery_reports, only: [:index]
     end
   end
 

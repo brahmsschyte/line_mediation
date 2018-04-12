@@ -1,6 +1,5 @@
 class SmsWebhookController < ApplicationController
-  protect_from_forgery with: :null_session, only: [:callback, :delivery_report]
-  after_action :set_retrieved_flag, only: [:index]
+  protect_from_forgery with: :null_session
 
   def callback # from/to cyclops
     unless is_validate_signature
@@ -15,7 +14,7 @@ class SmsWebhookController < ApplicationController
       res = Net::HTTP.get_response(uri)
       if res.is_a?(Net::HTTPSuccess)
         res_body = res.body.strip.split(':')
-        SmsDeliveryReport.create(msisdn: n, trx_id: res_body[1], trx_stat: res_body[0])
+        SmsDeliveryReport.create(msisdn: n, trx_id: res_body[1], trx_stat: res_body[0], status: sms_params[:content])
       end
     end
 
@@ -29,14 +28,6 @@ class SmsWebhookController < ApplicationController
     head :ok
   end
 
-  def index
-    @sms = SmsDeliveryReport.where(retrieved: false)
-
-    respond_to do |format|
-      format.json
-    end
-  end
-
   private
 
   def sms_params
@@ -45,10 +36,6 @@ class SmsWebhookController < ApplicationController
 
   def delivery_report_params
     params.permit(:trxid, :status)
-  end
-
-  def set_retrieved_flag
-    @sms.update_all(retrieved: true)
   end
 
   def secrets
