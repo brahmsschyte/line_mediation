@@ -14,7 +14,7 @@ class SmsWebhookController < ApplicationController
       res = Net::HTTP.get_response(uri)
       if res.is_a?(Net::HTTPSuccess)
         res_body = res.body.strip.split(':')
-        SmsDeliveryReport.create(msisdn: n, trx_id: res_body[1], trx_stat: res_body[0], status: sms_params[:content])
+        SmsDeliveryReport.create(msisdn: n, trx_id: res_body[1], trx_stat: res_body[0], status: sms_params[:content], retrieved: false)
       end
     end
 
