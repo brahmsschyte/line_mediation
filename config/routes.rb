@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -7,6 +8,10 @@ Rails.application.routes.draw do
       resources :mogi_tracks, only: [:index]
       resources :sms_delivery_reports, only: [:index]
     end
+  end
+
+  authenticate :admin_user do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   post 'line/:key/callback',  to: 'line_webhook#callback'
