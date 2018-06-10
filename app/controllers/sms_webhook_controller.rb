@@ -6,7 +6,7 @@ class SmsWebhookController < ApplicationController
       head :bad_request
     end
 
-    SmSenderWorker.perform_async(sms_params[:msisdn], sms_params[:content])
+    SmSenderWorker.perform_async(sms_params[:msisdn], sms_params[:content], sms_params[:ads_id])
 
     head :ok
   end
@@ -21,7 +21,7 @@ class SmsWebhookController < ApplicationController
   private
 
   def sms_params
-    params.permit(:content, msisdn: [])
+    params.permit(:content, :ads_id, msisdn: [])
   end
 
   def delivery_report_params
