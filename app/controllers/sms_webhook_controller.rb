@@ -28,6 +28,10 @@ class SmsWebhookController < ApplicationController
     params.permit(:trxid, :status)
   end
 
+  def secrets
+    @secrets = Rails.application.secrets
+  end
+
   def is_validate_signature
     params[:key] == secrets[:sms_key]
   end
