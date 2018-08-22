@@ -1,0 +1,2 @@
+class MonitaTruckTrack < ApplicationRecord
+end
